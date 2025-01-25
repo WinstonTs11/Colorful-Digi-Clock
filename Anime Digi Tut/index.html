@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anime Digital Clock</title>
+    <style>
+        body {
+            background: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-image: url('https://example.com/anime-background.jpg'); /* Add anime BG URL */
+            background-size: cover;
+        }
+
+        .clock-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px 50px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid #ff00ff;
+        }
+
+        .clock {
+            font-size: 4em;
+            color: #fff;
+            text-shadow: 0 0 10px #ff00ff,
+                         0 0 20px #ff00ff,
+                         0 0 30px #ff00ff;
+            position: relative;
+            display: flex;
+            gap: 15px;
+        }
+
+        .time-segment {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .colon {
+            margin: 0 -10px;
+            animation: glow 1s infinite alternate;
+        }
+
+        .date {
+            text-align: center;
+            color: #00ffff;
+            font-size: 1.5em;
+            margin-top: 15px;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        @keyframes glow {
+            from { opacity: 0.5; }
+            to { opacity: 1; }
+        }
+
+        .time-segment:hover {
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock-container">
+        <div class="clock">
+            <div class="time-segment" id="hours">00</div>
+            <div class="colon">:</div>
+            <div class="time-segment" id="minutes">00</div>
+            <div class="colon">:</div>
+            <div class="time-segment" id="seconds">00</div>
+        </div>
+        <div class="date" id="date"></div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            
+            // Time elements
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            
+            // Date elements
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateString = now.toLocaleDateString('en-US', options);
+            
+            // Update display
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+            document.getElementById('date').textContent = dateString;
+            
+            // Add color change effect
+            document.documentElement.style.setProperty('--hue', (now.getSeconds() * 6));
+        }
+
+        // Update every second
+        setInterval(updateClock, 1000);
+        updateClock(); // Initial call
+
+        // Add random anime quotes
+        const quotes = [
+            "Believe it! - Naruto",
+            "Go beyond! Plus Ultra! - My Hero Academia",
+            "I am here! - All Might",
+            "The world is cruel but also beautiful - Attack on Titan"
+        ];
+        
+        document.querySelector('.clock-container').addEventListener('click', () => {
+            alert(quotes[Math.floor(Math.random() * quotes.length)]);
+        });
+    </script>
+</body>
+</html>
